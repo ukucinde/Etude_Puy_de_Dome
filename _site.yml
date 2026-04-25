@@ -1,0 +1,17 @@
+name: "Etude_Puy_de_Dome"
+navbar:
+  left:
+    - text: "Accueil"
+      href: index.html
+    - text: "Script 1"
+      href: script1.html
+    - text: "Script 2"
+      href: script2.html
+  right:
+    - icon: fa-github
+      href: https://github.com/ukucinde
+output: 
+  html_document:
+    toc_float: TRUE  
+    theme: united
+    highlight: tango
