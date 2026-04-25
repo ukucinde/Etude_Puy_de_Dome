@@ -13,5 +13,5 @@ navbar:
 output: 
   html_document:
     toc_float: TRUE  
-    theme: united
+    theme: spacelab
     highlight: tango
