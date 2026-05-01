@@ -4,7 +4,7 @@ output: html_document
 ---
 
 
-# Bienvenue sur notre projet
+# Bienvenue sur notre projet 
 
 Étude réalisée par Abigaelle Camara et Vadim Tank-Solodkiv.
 
@@ -14,7 +14,7 @@ Sommaire de l'étude:
 1. [Page 2 : Analyse de la Topographie et Relief](analyse_sociale.html)
    *Étude du relief du pôle Clermontois via MNT.*
 
-2. Page 3 : État des lieux des Services Publics](page_3_services.html)
+2. [Page 3 : État des lieux des Services Publics](page_3_services.html)
    *Cartographie de l'offre globale (santé, social, culture, éducation).*
 
 3. [Page 4 : Diagnostic de Synthèse](page_4.html)
