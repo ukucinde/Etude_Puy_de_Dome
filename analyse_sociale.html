@@ -1,0 +1,521 @@
+<!DOCTYPE html>
+
+<html>
+
+<head>
+
+<meta charset="utf-8" />
+<meta name="generator" content="pandoc" />
+<meta http-equiv="X-UA-Compatible" content="IE=EDGE" />
+
+
+
+
+<title>Les contraintes physiques comme matrices des inégalités ?</title>
+
+<script src="site_libs/header-attrs-2.31/header-attrs.js"></script>
+<script src="site_libs/jquery-3.6.0/jquery-3.6.0.min.js"></script>
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<link href="site_libs/bootstrap-3.3.5/css/spacelab.min.css" rel="stylesheet" />
+<script src="site_libs/bootstrap-3.3.5/js/bootstrap.min.js"></script>
+<script src="site_libs/bootstrap-3.3.5/shim/html5shiv.min.js"></script>
+<script src="site_libs/bootstrap-3.3.5/shim/respond.min.js"></script>
+<style>h1 {font-size: 34px;}
+       h1.title {font-size: 38px;}
+       h2 {font-size: 30px;}
+       h3 {font-size: 24px;}
+       h4 {font-size: 18px;}
+       h5 {font-size: 16px;}
+       h6 {font-size: 12px;}
+       code {color: inherit; background-color: rgba(0, 0, 0, 0.04);}
+       pre:not([class]) { background-color: white }</style>
+<script src="site_libs/navigation-1.1/tabsets.js"></script>
+<script src="site_libs/kePrint-0.0.1/kePrint.js"></script>
+<link href="site_libs/lightable-0.0.1/lightable.css" rel="stylesheet" />
+<link href="site_libs/font-awesome-6.5.2/css/all.min.css" rel="stylesheet" />
+<link href="site_libs/font-awesome-6.5.2/css/v4-shims.min.css" rel="stylesheet" />
+
+<style type="text/css">
+  code{white-space: pre-wrap;}
+  span.smallcaps{font-variant: small-caps;}
+  span.underline{text-decoration: underline;}
+  div.column{display: inline-block; vertical-align: top; width: 50%;}
+  div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+  ul.task-list{list-style: none;}
+    </style>
+
+
+
+
+
+
+
+
+
+
+<style type = "text/css">
+.main-container {
+  max-width: 940px;
+  margin-left: auto;
+  margin-right: auto;
+}
+img {
+  max-width:100%;
+}
+.tabbed-pane {
+  padding-top: 12px;
+}
+.html-widget {
+  margin-bottom: 20px;
+}
+button.code-folding-btn:focus {
+  outline: none;
+}
+summary {
+  display: list-item;
+}
+details > summary > p:only-child {
+  display: inline;
+}
+pre code {
+  padding: 0;
+}
+</style>
+
+
+<style type="text/css">
+.dropdown-submenu {
+  position: relative;
+}
+.dropdown-submenu>.dropdown-menu {
+  top: 0;
+  left: 100%;
+  margin-top: -6px;
+  margin-left: -1px;
+  border-radius: 0 6px 6px 6px;
+}
+.dropdown-submenu:hover>.dropdown-menu {
+  display: block;
+}
+.dropdown-submenu>a:after {
+  display: block;
+  content: " ";
+  float: right;
+  width: 0;
+  height: 0;
+  border-color: transparent;
+  border-style: solid;
+  border-width: 5px 0 5px 5px;
+  border-left-color: #cccccc;
+  margin-top: 5px;
+  margin-right: -10px;
+}
+.dropdown-submenu:hover>a:after {
+  border-left-color: #adb5bd;
+}
+.dropdown-submenu.pull-left {
+  float: none;
+}
+.dropdown-submenu.pull-left>.dropdown-menu {
+  left: -100%;
+  margin-left: 10px;
+  border-radius: 6px 0 6px 6px;
+}
+</style>
+
+<script type="text/javascript">
+// manage active state of menu based on current page
+$(document).ready(function () {
+  // active menu anchor
+  href = window.location.pathname
+  href = href.substr(href.lastIndexOf('/') + 1)
+  if (href === "")
+    href = "index.html";
+  var menuAnchor = $('a[href="' + href + '"]');
+
+  // mark the anchor link active (and if it's in a dropdown, also mark that active)
+  var dropdown = menuAnchor.closest('li.dropdown');
+  if (window.bootstrap) { // Bootstrap 4+
+    menuAnchor.addClass('active');
+    dropdown.find('> .dropdown-toggle').addClass('active');
+  } else { // Bootstrap 3
+    menuAnchor.parent().addClass('active');
+    dropdown.addClass('active');
+  }
+
+  // Navbar adjustments
+  var navHeight = $(".navbar").first().height() + 15;
+  var style = document.createElement('style');
+  var pt = "padding-top: " + navHeight + "px; ";
+  var mt = "margin-top: -" + navHeight + "px; ";
+  var css = "";
+  // offset scroll position for anchor links (for fixed navbar)
+  for (var i = 1; i <= 6; i++) {
+    css += ".section h" + i + "{ " + pt + mt + "}\n";
+  }
+  style.innerHTML = "body {" + pt + "padding-bottom: 40px; }\n" + css;
+  document.head.appendChild(style);
+});
+</script>
+
+<!-- tabsets -->
+
+<style type="text/css">
+.tabset-dropdown > .nav-tabs {
+  display: inline-table;
+  max-height: 500px;
+  min-height: 44px;
+  overflow-y: auto;
+  border: 1px solid #ddd;
+  border-radius: 4px;
+}
+
+.tabset-dropdown > .nav-tabs > li.active:before, .tabset-dropdown > .nav-tabs.nav-tabs-open:before {
+  content: "\e259";
+  font-family: 'Glyphicons Halflings';
+  display: inline-block;
+  padding: 10px;
+  border-right: 1px solid #ddd;
+}
+
+.tabset-dropdown > .nav-tabs.nav-tabs-open > li.active:before {
+  content: "\e258";
+  font-family: 'Glyphicons Halflings';
+  border: none;
+}
+
+.tabset-dropdown > .nav-tabs > li.active {
+  display: block;
+}
+
+.tabset-dropdown > .nav-tabs > li > a,
+.tabset-dropdown > .nav-tabs > li > a:focus,
+.tabset-dropdown > .nav-tabs > li > a:hover {
+  border: none;
+  display: inline-block;
+  border-radius: 4px;
+  background-color: transparent;
+}
+
+.tabset-dropdown > .nav-tabs.nav-tabs-open > li {
+  display: block;
+  float: none;
+}
+
+.tabset-dropdown > .nav-tabs > li {
+  display: none;
+}
+</style>
+
+<!-- code folding -->
+
+
+
+
+</head>
+
+<body>
+
+
+<div class="container-fluid main-container">
+
+
+
+
+<div class="navbar navbar-default  navbar-fixed-top" role="navigation">
+  <div class="container">
+    <div class="navbar-header">
+      <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-bs-toggle="collapse" data-target="#navbar" data-bs-target="#navbar">
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+      </button>
+      <a class="navbar-brand" href="index.html"></a>
+    </div>
+    <div id="navbar" class="navbar-collapse collapse">
+      <ul class="nav navbar-nav">
+        <li>
+  <a href="index.html">Acceuil</a>
+</li>
+<li>
+  <a href="analyse_sociale.html">Les contraintes physiques comme matrices des inégalités ?</a>
+</li>
+<li>
+  <a href="page_3_services.html">Analyse socio-économique et structuration du territoire</a>
+</li>
+<li>
+  <a href="page_4.html">Synthèse territoriale</a>
+</li>
+      </ul>
+      <ul class="nav navbar-nav navbar-right">
+        <li>
+  <a href="https://github.com/ukucinde">
+    <span class="fa fa-github"></span>
+     
+  </a>
+</li>
+      </ul>
+    </div><!--/.nav-collapse -->
+  </div><!--/.container -->
+</div><!--/.navbar -->
+
+<div id="header">
+
+
+
+<h1 class="title toc-ignore">Les contraintes physiques comme matrices
+des inégalités ?</h1>
+
+</div>
+
+
+<p><br> <br> ## I: L’interface géomorphologique: un facteur de
+l’étalement urbain</p>
+<p><br></p>
+<div style="color: #2c3c50; line-height: 2 ;">
+<ol style="list-style-type: decimal">
+<li>La contrainte topographique : un moteur de la différenciation
+spatiale ?</li>
+</ol>
+<div style="text-align: justify; color: #2c3c50; line-height: 1.6;">
+<p>L’étude de l’altitude ne relève pas seulement de la simple
+observation paysagère, elle constitue la matrice sur laquelle se
+calquent les inégalités sociales. En géographie urbaine, la pente est
+souvent synonyme de valeur foncière élevée (vues dégagées, air “plus
+sain”) ou à l’inverse, d’enclavement. Les données utilisées ici sont
+issues d’un Modèle Numérique de Terrain (MNT) haute résolution,
+permettant de mesurer avec précision les variations d’altitude du pôle
+clermontois.</p>
+</div>
+<p><img src="analyse_sociale_files/figure-html/altitude_finale-1.png" alt="" width="672" /></p>
+<br>
+<div style="text-align: justify; color: #2c3c50; line-height: 1.6;">
+<p style="text-indent: 30px;">
+Le relief apparaît comme étant le premier facteur structurel de la
+métropole clermontoise. Ce MNT met en évidence une interface
+géomorphologique majeure : le contact entre le fossé d’effondrement de
+la Limagne (zone plane et fertile) et le socle cristallin de la Chaîne
+des Puys.
+</p>
+<p style="text-indent: 30px;">
+On constate que l’urbanisation clermontoise ne s’est pas faite de
+manière circulaire, mais selon un gradient d’altitude asymétrique. À
+l’Ouest, la ville se heurte à des ruptures de pente qui ont
+historiquement limité l’étalement urbain,forçant une densification
+verticale et créant des quartiers résidentiels “perchés” très prisés. À
+l’inverse, vers l’Est (en direction de Gerzat), l’absence de contrainte
+physique a favorisé une extension horizontale massive. Ce plat pays a
+permis l’implantation de vastes infrastructures (zones industrielles,
+autoroutes, centres logistiques) qui agissent aujourd’hui comme des
+barrières sociales et sonores, contrastant avec le cadre de vie des
+hauteurs.
+</p>
+</div>
+<p><br> Schéma de géotraitement : de la Topographie du pôle Clermontois
+<img src="MNT.png" alt="Schéma de géotraitement du Raster" /> <br></p>
+<p>=&gt; Pour dépasser les limites administratives parfois trompeuses,
+nous avons croisé les données satellitaires de Copernicus avec notre
+maillage de population. L’objectif était de confronter la “ville de
+droit” (les limites communales) à la “ville de fait” (le bâti réel et la
+densité).</p>
+<p><br></p>
+<div style="color: #2c3c50; line-height: 2 ;">
+<ol start="2" style="list-style-type: decimal">
+<li>Morphologie urbaine et densité : la lecture par la réflectance
+<br></li>
+</ol>
+<p><img src="analyse_sociale_files/figure-html/raster_final_titre_complet-1.png" alt="" width="672" /></p>
+<div style="text-align: justify; color: #2c3c50; line-height: 1.6;">
+<p style="text-indent: 30px;">
+La superposition des données révèle des corrélations morpho-sociales
+nettes. Le pôle minéralisé (gris/blanc), coïncide avec les carreaux de
+population les plus denses. On y observe une continuité du bâti qui
+ignore les frontières entre communes, matérialisant l’agglomération
+réelle. Cette zone de forte réflectance correspond souvent aux quartiers
+où la mixité sociale est la plus complexe à gérer du fait de la densité.
+</p>
+<p style="text-indent: 30px;">
+Les “vides” apparents (zones sombres/marrons), bien que situés à
+l’intérieur des limites administratives (en rouge), sont des espaces
+dépourvus de population (absence de carreaux roses). Ces “vides”
+révèlent des “coupures vertes” et des zones de transition agricole.
+</p>
+<p style="text-indent: 30px;">
+Malgré la pression urbaine, on observe encore une “zone tampon”
+non-bâtie. Cette discontinuité physique explique en partie la
+persistance de profils socio-économiques distincts entre les deux
+communes : elles ne sont pas encore totalement “soudées” par le bâti, ce
+qui maintient une certaine autonomie de leurs marchés immobiliers
+respectifs.
+</p>
+<p style="text-indent: 30px;">
+En somme, cette approche permet de voir que la ville ne s’arrête pas à
+ses panneaux d’entrée, mais là où le pixel change de nature. Elle
+confirme que l’organisation spatiale du pôle clermontois est le fruit
+d’une lutte constante entre la topographie et la volonté d’extension
+urbaine.
+</p>
+</div>
+<p><br> Schéma de géotraitement : de l’Occupation du sol <img
+src="deuxieme.png" alt="Schéma de géotraitement Raster" /> <br> <br></p>
+<div
+id="ii-la-fracture-sociale-par-le-carreau-une-lecture-infracommunale-des-revenus"
+class="section level2">
+<h2>II: La fracture sociale par le carreau : une lecture infracommunale
+des revenus</h2>
+<p><br></p>
+<div style="text-align: justify; color: #2c3c50; line-height: 1.6;">
+<p>Afin d’affiner l’analyse, il est nécessaire de quantifier les
+disparités entre les communes du pôle urbain. La jointure spatiale est
+l’étape qui nous permet de croiser deux couches d’informations
+distinctes : la grille de revenus (carreaux de 200m de l’INSEE) et les
+limites administratives (OSM). Cette opération permet d’attribuer à
+chaque carreau le nom de sa commune d’appartenance, rendant ainsi
+possible le calcul d’indicateurs agrégés par territoire, et la
+confrontation de la “ville de droit” à la “ville de fait”.</p>
+</div>
+<table class="table table-striped table-hover" style="width: auto !important; margin-left: auto; margin-right: auto;">
+<caption>
+Synthèse des revenus par territoire
+</caption>
+<thead>
+<tr>
+<th style="text-align:left;">
+Commune
+</th>
+<th style="text-align:right;">
+Nb Carreaux
+</th>
+<th style="text-align:right;">
+Moyenne (€)
+</th>
+<th style="text-align:right;">
+Médiane (€)
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:left;">
+Clermont-Ferrand
+</td>
+<td style="text-align:right;">
+633
+</td>
+<td style="text-align:right;">
+48282
+</td>
+<td style="text-align:right;">
+23000
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+Gerzat
+</td>
+<td style="text-align:right;">
+129
+</td>
+<td style="text-align:right;">
+11210
+</td>
+<td style="text-align:right;">
+2600
+</td>
+</tr>
+</tbody>
+</table>
+<pre><code>## [1] 764</code></pre>
+<img src="analyse_sociale_files/figure-html/unnamed-chunk-3-1.png" alt="" width="672" />
+<br>
+<div style="text-align: justify; color: #2c3c50; line-height: 1.6;">
+<p>Note : Les espaces vides sur la carte correspondent à des carreaux où
+la population est trop faible pour permettre la diffusion des données de
+revenus (secret statistique de l’INSEE en deçà de 11 ménages par
+carreau). Ces zones coïncident majoritairement avec les espaces
+agricoles, industriels ou naturels identifiés précédemment via
+l’occupation du sol.</p>
+</div>
+<p><br></p>
+<div style="text-align: justify; color: #2c3c50; line-height: 1.6;">
+<p style="text-indent: 30px;">
+Les résultats issus de l’agrégation spatiale confirment une hiérarchie
+territoriale marquée. Clermont-Ferrand, en tant que pôle de commandement
+et centre administratif majeur (capitale historique de l’Auvergne,
+chef-lieu du département et siège de l’intercommunalité) concentre les
+revenus les plus élevés, particulièrement dans son centre historique et
+ses quartiers résidentiels de l’Ouest. Le revenu moyen y est de 48 282€
+par carreau, soit plus du double de celui de Gerzat (1 736 365 €).
+</p>
+<p style="text-indent: 30px;">
+L’écart frappant avec Gerzat, où les revenus sont plus faibles et
+homogènes, ne reflète pas seulement un manque d’attractivité, mais une
+véritable spécialisation fonctionnelle du territoire. Tandis que
+Clermont-Ferrand conserve les fonctions politiques et économiques à
+forte valeur ajoutée, Gerzat joue le rôle de commune de report, marquée
+par une structure périurbaine en phase de consolidation. Cette fracture
+souligne que la ville ne s’arrête pas à ses panneaux d’entrée, mais que
+son organisation sociale est le fruit d’une lutte constante entre
+topographie et stratégies d’extension urbaine.
+</p>
+</div>
+<br>
+<div style="text-align: justify; color: #2c3c50; line-height: 1.6;">
+<p>⇒ Si la morphologie urbaine et les niveaux de revenus dessinent une
+première frontière entre Clermont-Ferrand et sa périphérie, il convient
+désormais d’analyser comment ces disparités se traduisent dans l’accès
+quotidien aux services. La “fracture” est-elle aussi visible dans
+l’offre de soins et de commerces ? C’est ce que nous allons explorer
+dans la partie suivante.</p>
+</div>
+</div>
+</div>
+</div>
+
+
+
+
+</div>
+
+<script>
+
+// add bootstrap table styles to pandoc tables
+function bootstrapStylePandocTables() {
+  $('tr.odd').parent('tbody').parent('table').addClass('table table-condensed');
+}
+$(document).ready(function () {
+  bootstrapStylePandocTables();
+});
+
+
+</script>
+
+<!-- tabsets -->
+
+<script>
+$(document).ready(function () {
+  window.buildTabsets("TOC");
+});
+
+$(document).ready(function () {
+  $('.tabset-dropdown > .nav-tabs > li').click(function () {
+    $(this).parent().toggleClass('nav-tabs-open');
+  });
+});
+</script>
+
+<!-- code folding -->
+
+
+<!-- dynamically load mathjax for compatibility with self-contained -->
+<script>
+  (function () {
+    var script = document.createElement("script");
+    script.type = "text/javascript";
+    script.src  = "https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML";
+    document.getElementsByTagName("head")[0].appendChild(script);
+  })();
+</script>
+
+</body>
+</html>

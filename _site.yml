@@ -3,10 +3,13 @@ navbar:
   left:
     - text: "Accueil"
       href: index.html
-    - text: "Script 1"
-      href: script1.html
-    - text: "Script 2"
-      href: script2.html
+    - text: "Les contraintes physiques comme matrices des inégalités ?"     
+      href: analyse_sociale.html
+    - text: "Analyse socio-économique et structuration du territoire"
+      href: page_3_services.html
+    - text: "Synthèse territoriale"
+      href: page_4.html
+  
   right:
     - icon: fa-github
       href: https://github.com/ukucinde
