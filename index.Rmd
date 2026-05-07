@@ -6,7 +6,7 @@ output: html_document
 
 # Bienvenue sur notre projet 
 
-Étude réalisée par Abigaelle Camara et Vadim Tank-Solodkiv.
+Étude réalisée par Abigaelle Camara et Vadim Tank-Solodki.
 
 <br> <br>
 Sommaire de l'étude:
